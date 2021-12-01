@@ -12,8 +12,9 @@ aluminum peripherial evaluation case.
   <!-- Includes -->
   <xacro:include filename="$(find realsense2_description)/urdf/_materials.urdf.xacro" />
   <xacro:include filename="$(find realsense2_description)/urdf/_usb_plug.urdf.xacro" />
+  <xacro:include filename="$(find realsense2_description)/urdf/_d435.gazebo.xacro" />
 
-  <xacro:macro name="sensor_d435" params="parent *origin name:=camera use_nominal_extrinsics:=false add_plug:=false">
+  <xacro:macro name="sensor_d435" params="parent *origin name:=camera topic_ns:=camera publish_pointcloud:=true use_nominal_extrinsics:=false add_plug:=false">
     <xacro:property name="M_PI" value="3.1415926535897931" />
 
     <!-- The following values are approximate, and the camera node
@@ -134,12 +135,16 @@ aluminum peripherial evaluation case.
       </joint>
       <link name="${name}_color_frame"/>
 
+
       <joint name="${name}_color_optical_joint" type="fixed">
         <origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}" />
         <parent link="${name}_color_frame" />
         <child link="${name}_color_optical_frame" />
       </joint>
       <link name="${name}_color_optical_frame"/>
+
+      <!-- Realsense Gazebo Plugin -->
+      <xacro:gazebo_d435 camera_name="${name}" reference_link="${name}_link" topics_ns="${topics_ns}" depth_optical_frame="${name}_depth_optical_frame" color_optical_frame="${name}_color_optical_frame" infrared1_optical_frame="${name}_left_ir_optical_frame" infrared2_optical_frame="${name}_right_ir_optical_frame" publish_pointcloud="${publish_pointcloud}"/>
     </xacro:if>
 
     <xacro:if value="${add_plug}">

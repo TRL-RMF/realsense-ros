@@ -26,11 +26,11 @@
     </include>
   </group>
 
-  <group ns="$(arg camera3)" if="$(eval serial_no_camera3 != '')">
+  <!-- <group ns="$(arg camera3)" if="$(eval serial_no_camera3 != '')">
     <include file="$(find realsense2_camera)/launch/includes/nodelet.launch.xml">
       <arg name="serial_no"             value="$(arg serial_no_camera3)"/>
       <arg name="tf_prefix"		          value="$(arg tf_prefix_camera3)"/>
       <arg name="initial_reset"         value="$(arg initial_reset)"/>
     </include>
-  </group>
+  </group> -->
 </launch>
